@@ -1,0 +1,17 @@
+{
+  "id": "a978f1cb-2075-4132-b91b-13d29f1b06e4",
+  "name": "First-CICD",
+  "projectId": "27ce9688-bc69-4b79-8fdc-da3d8f06845c",
+  "ports": [
+    {
+      "expose": true,
+      "number": 3000
+    }
+  ],
+  "publicAccess": {
+    "enabled": true,
+    "domain": "auto"
+  },
+  "resourceTier": "t1",
+  "dockerFileName": "Dockerfile"
+}

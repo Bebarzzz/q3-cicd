@@ -1,0 +1,38 @@
+
+name: Ghaymah CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "master" ]
+
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+
+
+  deploy-production:
+    name: Deploy to Production
+    needs: build
+    runs-on: ubuntu-latest
+    # This environment tag is what triggers the manual approval in GitHub
+    environment: 
+      name: production
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4  
+      - name: Install Ghaymah CLI
+        run: curl -sSL https://cli.ghaymah.systems/install.sh | bash
+
+      - name: Login to Ghaymah
+        run: $HOME/ghaymah/bin/gy auth login --email "${{secrets.GHAYMAH_EMAIL}}" --password "${{secrets.GHAYMAH_PW}}" --debug
+
+      - name: Deploy to Ghaymah
+        run: $HOME/ghaymah/bin/gy resource app launch --debug
